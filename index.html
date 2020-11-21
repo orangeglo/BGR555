@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>BGR555 Color Tool</title>
+    <script src="script/vue.min.js"></script>
+    <script id="devload" src="script/devload.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+  </head>
+
+  <body>
+    <noscript>
+      Looks like you have JS disabled. This tool needs javascript to function!
+    </noscript>
+
+    <div class='heading'>
+      <h1>BGR555 Color Tool</h1>
+      <p>Convert between Hex RGB and BGR555 format, suitable for SNES, GBC, and GBA!</p>
+    </div>
+
+    <div id="app" >
+      <div class='settings-row'>
+        <span class='settings-label'>Byte Order: </span>
+        <input type="radio" v-model="endian" value="little" id="little-endian"/>
+        <label for="little-endian">Little Endian</label>
+        <input type="radio" v-model="endian" value="big" id="big-endian" />
+        <label for="big-endian">Big Endian</label>
+      </div>
+
+      <div class='input-row'>
+        <div class='color-display' :class="[invalid]" :style="{ backgroundColor: '#' + hexColor }"></div>
+        <input class='color-input' type="text" maxlength='6' v-model="hexColor" @input="colorChanged('hex')"/>
+        <div :class="[direction]"></div>
+        <div class='color-display' :class="[invalid]" :style="{ backgroundColor: '#' + bgrPreviewHex }"></div>
+        <input class='color-input' type="text" maxlength='4' v-model="bgrColor" @input="colorChanged('bgr')"/>
+        <input type='text' id='note-input' class='note-input' v-model="note" placeholder="Note" />
+        <span>
+          <button @click="saveColor">Save (s)</button>
+          <button @click="setRandomHex">Pick (p)</button>
+          <button @click="setRandomHex">Random (r)</button>
+        </span>
+      </div>
+
+      <div class='saved-colors'>
+        <div class='input-row' v-for="(color, i) in savedColors" :key="color.id">
+          <button class='remove-button' @click="removeColor(i)">X</button>
+          <div class='color-display' :style="{ backgroundColor: '#' + color.hexColor }"></div>
+          <input class='color-input' type="text" :value="color.hexColor" disabled='true' />
+          <div :class="[color.direction]"></div>
+          <div class='color-display' :style="{ backgroundColor: '#' + color.bgrPreviewHex }"></div>
+          <input class='color-input' type="text" :value="endian === 'little' ? color.bgrColorLE : color.bgrColorBE" disabled='true' />
+          {{ color.note }}
+        </div>
+        <button v-if="savedColors.length > 0" @click="removeAllColors">Remove All</button>
+      </div>
+    </div>
+
+    <footer>
+      <a href="https://github.com/orangeglo/gbnp">view this project on github</a>
+      -
+      by orangeglo (orangeglo#6197 on Discord)
+    </footer>
+
+    <script src="script/app.js"></script>
+  </body>
+</html>
