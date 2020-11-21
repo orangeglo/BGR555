@@ -1,6 +1,5 @@
 /*
   TODO
-  - color picker
   - warn about overflow from bgr -> hex ? ex over 7FFF big e
 */
 
@@ -25,7 +24,7 @@ const app = new Vue({
         if (e.key === 's') {
           this.saveColor();
         } else if (e.key === 'p') {
-
+          this.$refs.picker.click();
         } else if (e.key === 'r') {
           this.setRandomHex();
         }
@@ -82,7 +81,6 @@ const app = new Vue({
         hexColor: this.hexColor.toUpperCase(),
         bgrColorLE: this.bgrWithEndian(this.bgrColor, 'little').toUpperCase(),
         bgrColorBE: this.bgrWithEndian(this.bgrColor, 'big').toUpperCase(),
-        bgrPreviewHex: this.bgrPreviewHex,
         direction: this.direction,
         note: this.note,
       });
@@ -100,6 +98,10 @@ const app = new Vue({
         return bgr.slice(2, 4) + bgr.slice(0, 2);
       }
     },
+    updateColorFromPicker(e) {
+      this.hexColor = e.target.value.slice(1, 7);
+      this.setBGRFromHex();
+    },
     saveToStorage: function() {
       localStorage.setItem('savedColors', JSON.stringify(this.savedColors));
     },
@@ -111,9 +113,6 @@ const app = new Vue({
     }
   },
   computed: {
-    bgrPreviewHex: function() {
-      return this.bgrToHex();
-    },
     invalid: function() {
       return (this.hexColor.length < 6 || this.bgrColor.length < 4) && 'invalid';
     },

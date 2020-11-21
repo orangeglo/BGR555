@@ -28,11 +28,10 @@
       </div>
 
       <div class='input-row'>
-        <div class='color-display' :class="[invalid]" :style="{ backgroundColor: '#' + hexColor }"></div>
-        <input class='color-input' type="text" maxlength='6' v-model="hexColor" @input="colorChanged('hex')"/>
+        <input type='color' ref="picker" :value="'#' + hexColor" @input="updateColorFromPicker"/>
+        <input class='color-input' type="text" maxlength='6' v-model="hexColor" pattern="[0-9A-Fa-f]{6}" @input="colorChanged('hex')"/>
         <div :class="[direction]"></div>
-        <div class='color-display' :class="[invalid]" :style="{ backgroundColor: '#' + bgrPreviewHex }"></div>
-        <input class='color-input' type="text" maxlength='4' v-model="bgrColor" @input="colorChanged('bgr')"/>
+        <input class='color-input' type="text" maxlength='4' v-model="bgrColor"pattern="[0-9A-Fa-f]{4}"  @input="colorChanged('bgr')"/>
         <input type='text' id='note-input' class='note-input' v-model="note" placeholder="Note" />
         <span>
           <button @click="saveColor">Save (s)</button>
@@ -47,7 +46,6 @@
           <div class='color-display' :style="{ backgroundColor: '#' + color.hexColor }"></div>
           <input class='color-input' type="text" :value="color.hexColor" disabled='true' />
           <div :class="[color.direction]"></div>
-          <div class='color-display' :style="{ backgroundColor: '#' + color.bgrPreviewHex }"></div>
           <input class='color-input' type="text" :value="endian === 'little' ? color.bgrColorLE : color.bgrColorBE" disabled='true' />
           {{ color.note }}
         </div>

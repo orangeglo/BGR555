@@ -65,10 +65,10 @@ button {
 }
 
 .color-display {
-  height: 22px;
+  height: 20px;
   min-width: 3rem;
-  border: 1px solid black;
   display: inline-block;
+  border: 1px solid #AAA;
 }
 
 .color-display.invalid {
@@ -88,4 +88,20 @@ footer {
 a {
   color: #000079;
 }
+
+input[type="color"] {
+  height: 22px;
+  width: 3rem;
+  padding: 0;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="color"]:hover {
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0; 
 }
