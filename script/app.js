@@ -24,7 +24,7 @@ const app = new Vue({
         if (e.key === 's') {
           this.saveColor();
         } else if (e.key === 'p') {
-          this.$refs.picker.click();
+          this.openPicker();
         } else if (e.key === 'r') {
           this.setRandomHex();
         }
@@ -101,6 +101,9 @@ const app = new Vue({
     updateColorFromPicker(e) {
       this.hexColor = e.target.value.slice(1, 7);
       this.setBGRFromHex();
+    },
+    openPicker: function() {
+      this.$refs.picker.click();
     },
     saveToStorage: function() {
       localStorage.setItem('savedColors', JSON.stringify(this.savedColors));
