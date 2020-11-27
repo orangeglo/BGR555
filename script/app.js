@@ -76,14 +76,16 @@ const app = new Vue({
       this.setBGRFromHex();
     },
     saveColor: function() {
-      this.savedColors.unshift({
-        id: Math.floor(Math.random() * 10000000000),
-        hexColor: this.hexColor.toUpperCase(),
-        bgrColorLE: this.bgrWithEndian(this.bgrColor, 'little').toUpperCase(),
-        bgrColorBE: this.bgrWithEndian(this.bgrColor, 'big').toUpperCase(),
-        direction: this.direction,
-        note: this.note,
-      });
+      if (!this.invalid) {
+        this.savedColors.unshift({
+          id: Math.floor(Math.random() * 10000000000),
+          hexColor: this.hexColor.toUpperCase(),
+          bgrColorLE: this.bgrWithEndian(this.bgrColor, 'little').toUpperCase(),
+          bgrColorBE: this.bgrWithEndian(this.bgrColor, 'big').toUpperCase(),
+          direction: this.direction,
+          note: this.note,
+        });
+      }
     },
     removeColor: function(i) {
       this.savedColors.splice(i, 1);

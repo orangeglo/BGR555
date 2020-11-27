@@ -56,6 +56,7 @@ button {
 
 .color-input:disabled {
   color: black;
+  background-color: white;
 }
 
 .note-input {
@@ -87,6 +88,20 @@ footer {
 
 a {
   color: #000079;
+}
+
+input {
+  border-radius: 0;
+  border: 1px solid lightgrey;
+  padding: 2px;
+}
+
+input:invalid {
+  border-color: red;
+}
+
+input:focus {
+  border-color: lightgrey;
 }
 
 input[type="color"] {
